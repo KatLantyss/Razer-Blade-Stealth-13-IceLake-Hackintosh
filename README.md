@@ -1,1 +1,1 @@
-# Razer-Blade-Stealth-13-i7-1065G7-Hackintosh
+# Razer-Blade-Stealth-13-Icelake-Hackintosh
