@@ -6,7 +6,8 @@
 
 
 ![](https://i.imgur.com/rgKySm7.png)
-    >I changed graphic card name in this picture.
+    
+> I changed graphic card name in this picture.
 
 ## Tested Model Spec
 * ### Razer Blade Stealth 13 (2020) RZ09-0310
