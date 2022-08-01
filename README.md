@@ -1,7 +1,6 @@
 # Razer Blade Stealth 13 Icelake Hackintosh (OpenCore)
 
 ## Support Version
----
 * OpenCore: `0.8.2`
 * MacOS: `Monterey 12.4`
 
@@ -10,7 +9,6 @@
     >I changed graphic card name in this picture.
 
 ## Tested Model Spec
----
 * ### Razer Blade Stealth 13 (2020) RZ09-0310
     ![](https://assets2.razerzone.com/images/blade-stealth-2020/razer-blade-stealth-2020-120hz-model.png)
     |  Specifications   |              Detail                               |
@@ -25,7 +23,6 @@
 
 
 ## What is Working?
----
 - CPU power management
 - Hardware acceleration
 - Sleep/Wake
@@ -36,7 +33,6 @@
 - USB ports
 
 ## What is Not Working?
----
 - Airdrop <sup>**Not Supported in MacOS when using Intel Wireless Card**</sup>
 - NVIDIA® GeForce GTX 1650 Ti Max-Q <sup>**Disable in ACPI**</sup>
 - ThunderBolt 3 <sup>**Type-C port is fine to use.**</sup>
@@ -53,7 +49,6 @@
 ---
 # Specific Patch
 ## ACPI
----
 ### Add
 * SSDT-dGPU-Off
     * More details in [Disabling laptop dGPUs | Getting Started With ACPI](https://dortania.github.io/Getting-Started-With-ACPI/Laptops/laptop-disable.html#disabling-laptop-dgpus-ssdt-dgpu-off-nohybgfx).
@@ -93,7 +88,6 @@
     |TableSignature |Data   |44534454                                      |
 
 ## DeviceProperties
----
 ### Add
 - **PciRoot(0x0)/Pci(0x2,0x0)**
    - [**Support all possible Core Display Clock (CDCLK) frequencies on ICL platforms**](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#support-all-possible-core-display-clock-cdclk-frequencies-on-icl-platforms)
