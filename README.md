@@ -4,6 +4,8 @@
 ---
 * OpenCore: `0.8.2`
 * MacOS: `Monterey 12.4`
+
+
 ![](https://i.imgur.com/rgKySm7.png)
     >I changed graphic card name in this picture.
 
