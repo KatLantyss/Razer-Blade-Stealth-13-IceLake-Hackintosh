@@ -7,10 +7,10 @@
 
 ## Screenshot
 ### About this Mac
-<p align="center"><img src="./Screenshot/Sonoma%2014.6.png"></p>
+<p align="center"><img src="https://hackmd.io/_uploads/Hk90bbwm1e.png"></p>
 
 ### Idle power consumption
-<p align="center"><img src="./Screenshot/idle.png"></p>
+<p align="center"><img src="https://hackmd.io/_uploads/Hy8jbbv7kl.png"></p>
 
 > [!NOTE]
 > The battery hardly drains during sleep mode. With the brightness set to about 60%, it drains about 5% of the battery over 30 minutes of regular use (watching videos, listening to music, and word processing). Theoretically, the battery life can last up to 10 hours.
