@@ -43,7 +43,7 @@
 ## What is Not Working?
 - AWDL (Apple Wireless Direct Link) <sup>**Not Supported in MacOS while using Intel Wireless Card**</sup>
 - NVIDIA® GeForce GTX 1650 Ti Max-Q <sup>**Disable in BIOS**</sup>
-- ThunderBolt 3 <sup>**Type-C port is fine to use.**</sup>
+- ThunderBolt 3 and External Display <sup>**Type-C port is fine to use.**</sup>
 
 ---
 ---
