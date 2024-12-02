@@ -126,7 +126,7 @@
    - [**Fix the issue that the builtin display remains garbled after the system boots on ICL platforms**](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-issue-that-the-builtin-display-remains-garbled-after-the-system-boots-on-icl-platforms)
    - More details in [**Intel Iris Plus Graphics (Ice Lake processors) | WhateverGreen (Intel® HD Graphics FAQs)**](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#intel-iris-plus-graphics-ice-lake-processors)
 > [!TIP]
-> Set the `pci-aspm-default` parameter to L1 for all PCIe devices detected in Hackintool and configure ASPM to L0 to optimize power-saving effects. More details in [here](https://github.com/daliansky/OC-little/tree/master/16-%E7%A6%81%E6%AD%A2PCI%E8%AE%BE%E5%A4%87%E5%8F%8A%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/16-2-%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F). 
+> Set the `pci-aspm-default` parameter to L1 for all PCIe devices detected in Hackintool to optimize power-saving effects. More details in [here](https://github.com/daliansky/OC-little/tree/master/16-%E7%A6%81%E6%AD%A2PCI%E8%AE%BE%E5%A4%87%E5%8F%8A%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/16-2-%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F). 
 
 ## NVRAM
 ### Add
@@ -145,5 +145,4 @@
 - [**Dortania**](https://github.com/dortania) for the great guides.
 - [**daliansky**](https://github.com/daliansky) for the guidance on the ACPI patches and optimizations.
 - [**StoneEvil**](https://github.com/stonevil/Razer_Blade_Advanced_early_2019_Hackintosh) for BIOS setting.
-- [**jnr0602**](https://www.reddit.com/user/jnr0602/) for providing SSDT-PTSWAK.
 - [**mfpss95134**](https://github.com/mfpss95134) for giving advices and helps.
