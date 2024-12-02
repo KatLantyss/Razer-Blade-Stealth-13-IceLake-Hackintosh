@@ -54,7 +54,8 @@
 ## BIOS
 > [!CAUTION]
 > We accept no liability for any loss or damage howsoever changing BIOS with this guidance and cause damage on your device. Please be careful and make sure you know what you are doing.
-* Due to some BIOS setting options are hidden by Razer, we can use several tools to help us matching [Intel BIOS Settings | OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/icelake.html#intel-bios-settings), here are the steps in  [StoneEvil](https://github.com/stonevil/Razer_Blade_Advanced_early_2019_Hackintosh) guide.
+
+> Due to some BIOS setting options are hidden by Razer, we can use several tools to help us matching [Intel BIOS Settings | OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/icelake.html#intel-bios-settings), here are the steps in  [StoneEvil](https://github.com/stonevil/Razer_Blade_Advanced_early_2019_Hackintosh) guide.
 
 ### Settings
 - **Advanced**
@@ -64,8 +65,8 @@
     - **CPU Power Management**
       - **CPU Lock Configuration**
         - **CFG Lock** →&nbsp;`Disabled`
-  - **Thunderbolt(TM) Configuration**
-    - **Intergrated Thunderbolt(TM) Support** →&nbsp;`Disabled`
+  - **Thunderbolt™ Configuration**
+    - **Intergrated Thunderbolt™ Support** →&nbsp;`Disabled`
   - **USB Configuration** (No need `ReleaseUsbOwnership` in UEFI > Quirks when the follow options are enabled.)
     - **XHCI Hand-off** →&nbsp;`Enabled`
     - **EHCI Hand-off** →&nbsp;`Enabled`
@@ -75,7 +76,7 @@
       - **Primary Display** →&nbsp;`IGFX` (Optional, or disable in ACPI)
       - **DVMT Pre-Allocated** →&nbsp;`64M`
       - **DVMT Total Gfx Memory** →&nbsp;`Max`
-    - **TCSS Setup Menu** (Optional. Use for disable Thunderbolt(TM) Device)
+    - **TCSS Setup Menu** (Optional. Used to disable Thunderbolt™ devices.)
         - **ITBI PCI0 Root Port** →&nbsp;`Disabled`
         - **ITBI PCI1 Root Port** →&nbsp;`Disabled`
         - **ITBT DMA0** →&nbsp;`Disabled`
@@ -94,16 +95,29 @@
 # Specific Patch
 ## ACPI
 ### Add
-* **SSDT-dGPU-Off**
-    * More details in [Disabling laptop dGPUs | Getting Started With ACPI](https://dortania.github.io/Getting-Started-With-ACPI/Laptops/laptop-disable.html#disabling-laptop-dgpus-ssdt-dgpu-off-nohybgfx). No need when you disabled dGPU in BIOS.
-* **SSDT-PTSWAK**
-    * This fixes the issue where the screen needed to be turned on twice upon waking from sleep by modifying the content in [here](https://www.reddit.com/r/hackintosh/comments/vz2lfq/success_macos_monterey_124_on_a_2021_razer_blade/) to meet the requirements.
-* **SSDT-PPRW**
-    * To fix the instant wake caused by RP05. More details in [here](https://www.tonymacx86.com/threads/instant-dark-wake-after-sleep-gigabyte-b460-aorus-opencore.317139/).
-* **SSDT-TPD0**
-    * I wrote this myself, enabling I2C1 and disabling the other I2CX devices to make the touchpad work.
-* Other SSDT
-    * Refer to [OC-little](https://github.com/daliansky/OC-little) to add missing devices and verify all functionalities, including power consumption and sleep.
+> [!NOTE]
+> This part refers to [OC-little](https://github.com/daliansky/OC-little) for patching and adding missing devices, as well as verifying all functionalities, including power consumption and sleep.
+
+#### Requirements
+| SSDTs       | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SSDT-AWAC   | This is a problem because macOS cannot communicate with AWAC clocks, so this requires us to either force on the legacy RTC clock or if unavailable create a fake one for macOS.                                                                                                                                                                                                          |
+| SSDT-EC     | Fixes embedded controller power by creating a fake embedded controller.                                                                                                                                                                                                                                                                                                                  |
+| SSDT-PLUG   | Allows for native CPU power management on Haswell and newer, see [Getting Started With ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) for more details.                                                                                                                                                                                                                    |
+| SSDT-PNLF   | Fixes brightness control.                                                                                                                                                                                                                                                                                                                                                                |
+| SSDT-PPRW   | Fixes the instant wake issue caused by RP05. RP05 appears to be the root port for the Thunderbolt™ controller. On IceLake, Thunderbolt™ is integrated into the CPU and cannot be patched, unlike discrete Thunderbolt™ controllers. In this case, I wrote this SSDT to prevent RP05 from waking the system and to improve power consumption.                                             |
+| SSDT-PTSWAK | Fixed the wake issue where the lid had to be opened twice for the system to wake properly.                                                                                                                                                                                                                                                                                               |
+| SSDT-RHUB   | Needed to fix Root-device errors on many IceLake laptops                                                                                                                                                                                                                                                                                                                                 |
+| SSDT-TPD0   | Razer's trackpad interrupt mode is APIC, which is more compatible with macOS than GPIO. However, the trackpad is on I2C1, and I2C0 acts as a controller for I2C1 through I2C3. This causes macOS to mistakenly recognize I2C0 as the trackpad instead of I2C1. To resolve this, I wrote this SSDT to disable the other I2CX devices and enable only I2C1, ensuring proper functionality. |
+| SSDT-USBX   | Fixes USB power.                                                                                                                                                                                                                                                                                                                                                                         |
+| SSDT-XOSI   | Fixes I2C trackpads and enables them in ACPI.                                                                                                                                                                                                                                                                                                                                            |
+
+#### Optional
+| Option SSDTs | Description                                                                                                                                                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SSDT-DGPU    | More details in [Disabling laptop dGPUs \| Getting Started With ACPI](https://dortania.github.io/Getting-Started-With-ACPI/Laptops/laptop-disable.html#disabling-laptop-dgpus-ssdt-dgpu-off-nohybgfx). No need when you disabled dGPU in BIOS. |
+| Other SSDTs  | More details in [添加缺失的部件 \| OC-little](https://github.com/daliansky/OC-little/tree/master/06-%E6%B7%BB%E5%8A%A0%E7%BC%BA%E5%A4%B1%E7%9A%84%E9%83%A8%E4%BB%B6#%E6%B7%BB%E5%8A%A0%E7%BC%BA%E5%A4%B1%E7%9A%84%E9%83%A8%E4%BB%B6).          |
+
 
 ## DeviceProperties
 ### Add
@@ -112,7 +126,7 @@
    - [**Fix the issue that the builtin display remains garbled after the system boots on ICL platforms**](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-issue-that-the-builtin-display-remains-garbled-after-the-system-boots-on-icl-platforms)
    - More details in [**Intel Iris Plus Graphics (Ice Lake processors) | WhateverGreen (Intel® HD Graphics FAQs)**](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#intel-iris-plus-graphics-ice-lake-processors)
 > [!TIP]
-> Add the `pci-aspm-default` parameter to all PCIe devices detected in Hackintool and set ASPM to L0 to optimize power-saving effects. More details in [here](https://github.com/daliansky/OC-little/tree/master/16-%E7%A6%81%E6%AD%A2PCI%E8%AE%BE%E5%A4%87%E5%8F%8A%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/16-2-%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F).
+> Set the `pci-aspm-default` parameter to L1 for all PCIe devices detected in Hackintool and configure ASPM to L0 to optimize power-saving effects. More details in [here](https://github.com/daliansky/OC-little/tree/master/16-%E7%A6%81%E6%AD%A2PCI%E8%AE%BE%E5%A4%87%E5%8F%8A%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/16-2-%E8%AE%BE%E7%BD%AEASPM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F). 
 
 ## NVRAM
 ### Add
